@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <title></title>
     <style>
+      * {
+        margin: 0;
+      }
+
       img {
         width: 200px;
       }
@@ -13,6 +17,7 @@
         width: 100%;
         background-color: #006699;
         position: fixed;
+        margin: 0;
         top: 0;
         left: 0;
       }
@@ -20,7 +25,6 @@
       #header img {
         height: 130px;
         width: 130px;
-        margin: 10px;
       }
 
       #navbar {
@@ -28,31 +32,50 @@
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 20px;
-        position: fixed;
         width: 100%;
-        top: 150px;
         left: 0;
       }
 
-      #navbar a {
-        color: #00141F;
+      #navbar li {
+        color: #00293D;
         text-decoration: none;
+        padding-right: 30px;
+        display: inline-block;
+      }
+
+      .selected {
+        color: #E6E6E6;
       }
 
       #content {
-        margin-top: 188px;
+        margin-top: 172px;
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      #theCircle {
+      #book1 {
         background-color: black;
         color: white;
         font-family: Helvetica
       }
 
-      #theAudacityOfHope {
+      #book2 {
         background-color: #66CCCC;
         color: #333366;
         font-family: Courier;
+      }
+
+      #album1 {
+        background-color: beige;
+        color: IndianRed;
+        font-family: Helvetica
+      }
+
+      #album2 {
+        background-color: slategray;
+        color: DarkSlateGray;
+        font-family: cursive;
       }
 
       .title {
@@ -83,38 +106,78 @@
   <body>
     <div id="header">
       <img src="http://static1.squarespace.com/static/53442c1be4b0304101234dc0/t/53d290a3e4b021e113e3b5ef/1406308520739/web-btn-circle-shop-nv.png" />
-      <div id="navbar"><a href="eCommerce_music.html">Go to Music</a></div>
+      <div id="navbar">
+        <ul>
+          <li id="music">Music</li>
+          <li id="books">Books</li>
+        </ul>
+      </div>
     </div>
-    <div id="content">
-      <div id="theCircle" class="fiction product">
-        <div class="title">"The Circle"</div>
-        <div class="genre">Fiction</div>
-        <div class="price">$9.99</div>
-        <div class="picture"><img src="https://d3thpuk46eyjbu.cloudfront.net/uploads/production/1204/1380216709/original/TheCircle-Jacket.png?1380216709" /></div>
-        <div class="selling_points">
-          <ul>
-            <li>Dystopian future</li>
-            <li>It's being made into a movie!</li>
-            <li>Technology focused</li>
-          </ul>
-        </div>
-      </div>
-      <div id="theAudacityOfHope" class="non_fiction product">
-        <div class="title">"The Audacity of Hope"</div>
-        <div class="genre">Non-fiction</div>
-        <div class="price">$7.19</div>
-        <div class="picture"><img src="http://rs286.pbsrc.com/albums/ll106/planetebook/cover%20buku/AudacityofHope.jpg~c200" /></div>
-        <div class="selling_points">
-          <ul>
-            <li>It's written by a president!</li>
-            <li>Politics</li>
-            <li>Barack Obama</li>
-          </ul>
-        </div>
-      </div>
+    <div id="content"></div>
     <div id="footer"></div>
     <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
     <script type="text/javascript">
+    var products = [{
+      product_type: 'books',
+      unique_id: 'book1',
+      title: 'The Circle',
+      genre: 'Fiction',
+      price: 9.99,
+      picture_url: "https://d3thpuk46eyjbu.cloudfront.net/uploads/production/1204/1380216709/original/TheCircle-Jacket.png?1380216709",
+      selling_points: ['Dystopian future', 'It\'s being made into a movie!', 'Technology focused']
+    },
+    {
+      product_type: 'books',
+      unique_id: 'book2',
+      title: 'The Audacity of Hope',
+      genre: 'Non-fiction',
+      price: 7.19,
+      picture_url: "http://rs286.pbsrc.com/albums/ll106/planetebook/cover%20buku/AudacityofHope.jpg~c200",
+      selling_points: ['It\'s written by a president!', 'Politics', 'Barack Obama']
+    },
+    {
+      product_type: 'music',
+      unique_id: 'album1',
+      title: '1000 Forms of Fear',
+      genre: 'Pop Awesomeness',
+      price: 9.99,
+      picture_url: "http://images.popmatters.com/news_art/s/sia-1000forms.jpg",
+      selling_points: ['Performace quality', 'Strong female voice', 'The feels, man. The feels']
+    },
+    {
+      product_type: 'music',
+      unique_id: 'album2',
+      title: 'Sign No More',
+      genre: 'Folk Music',
+      price: 9.49,
+      picture_url: "http://cdn.pitchfork.com/albums/14946/homepage_large.db7c043a.jpg",
+      selling_points: ['English -- the British kind', 'Touchy, feely', 'Sit back and relax']
+    }];
+
+    var add_to_page = function(item) {
+        $('#content').append($('<div id=' + item.unique_id + '>').html( $('<div class=title>').text(item.title)))
+        $('#content').append($('<div id=' + item.unique_id + '>').html( $('<div class=genre>').text(item.genre)));
+        $('#content').append($('<div id=' + item.unique_id + '>').html( $('<div class=price>').text(item.price)));
+        $('#content').append($('<div id=' + item.unique_id + '>').html( $('<div class=picture>').html('<img src=' + item.picture_url + ' />')));
+        $('#content').append($('<div id=' + item.unique_id + '>').html( $('<div class=selling_points>').html('<ul><li>' + item.selling_points[0] + '</li><li>' + item.selling_points[1] + '</li><li>'  + item.selling_points[2] + '</li></ul>')));
+    }
+
+    var selected = function(event) {
+      $('#navbar li').css('color', '#00293D');
+      $(this).css('color', '#E6E6E6');
+      $('#content').empty();
+      console.log(this.id);
+
+      for (var i = 0; i < products.length; i++) {
+        if (products[i].product_type === this.id) {
+          add_to_page(products[i]);
+        }
+      }
+    };
+
+
+    $('#music').click(selected);
+    $('#books').click(selected);
 
     </script>
   </body>
